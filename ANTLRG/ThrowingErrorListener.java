@@ -18,7 +18,7 @@ public class ThrowingErrorListener extends BaseErrorListener {
    public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
 
    		// Here I'm gonna create a file to keep all errors.
-   		errorMsg = errorMsg + newline + "HO SHIT WADUP! - line " + line + ":" + charPositionInLine + " " + msg;
+   		errorMsg = errorMsg + newline + "TIENES UN BELLO ERROR - line " + line + ":" + charPositionInLine + " " + msg;
 
    		writeErrors(errorMsg, file);
       }

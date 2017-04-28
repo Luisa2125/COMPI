@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.EventQueue;
+import java.awt.Point;
 
 import javax.management.StringValueExp;
 import javax.swing.AbstractAction;
@@ -26,6 +28,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.text.Caret;
 import javax.swing.text.DefaultEditorKit;
 
 import org.antlr.v4.gui.TreeViewer;
@@ -40,10 +43,13 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+
+import java.awt.Font;
 
 
 public class VisualPanel {
@@ -51,7 +57,7 @@ public class VisualPanel {
 	private JFrame frame;
 	private Path file = Paths.get("ErrorLog_Syntax.log");
 	private List<String> Errors;
-	
+	private Visitor type;
 
 	/**
 	 * Launch the application.
@@ -74,6 +80,7 @@ public class VisualPanel {
 	 */
 	public VisualPanel() {
 		initialize();
+		
 	}
 
 	/**
@@ -81,6 +88,7 @@ public class VisualPanel {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setFont(new Font("FreeSans", Font.PLAIN, 35));
 		frame.setBounds(100, 100, 2600, 1200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -94,24 +102,86 @@ public class VisualPanel {
 		frame.getContentPane().add(tabbedPane2);
 		
 		TextArea textArea3 = new TextArea();
+		textArea3.setFont(new Font("FreeSans", Font.PLAIN, 25));
 		tabbedPane2.addTab("Error", null, textArea3, null);
 		
 		TextArea textArea1 = new TextArea();
+		textArea1.setFont(new Font("FreeSans", Font.PLAIN, 33));
 		tabbedPane1.addTab("Gramatica", null, textArea1, null);
 		
 		TextArea textArea2 = new TextArea();
+		textArea2.setFont(new Font("FreeSans", Font.PLAIN, 33));
+		
+		/***textArea2.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Caret c;
+				Point p = caret.getMagicCaretPosition();
+				
+				
+
+				aFrameYourePositioning.setLocation(p);
+				// TODO Auto-generated method stub
+				int c = e.getKeyCode ();
+		        if (c==KeyEvent.VK_UP) {                
+		        	p.y -= textArea2.getLocationOnScreen().y;  
+		        } else if(c==KeyEvent.VK_DOWN) {                
+		        	p.y += textArea2.getLocationOnScreen().y;  
+		        } else if(c==KeyEvent.VK_LEFT) {                
+		        	p.x -= textArea2.getLocationOnScreen().x;   
+		        } else if(c==KeyEvent.VK_RIGHT) {                
+		        	p.x += textArea2.getLocationOnScreen().x;  
+		        }
+		        
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				Caret caret = textArea2.getCaretPosition();
+				Point p = caret.getMagicCaretPosition();
+				
+				
+
+				aFrameYourePositioning.setLocation(p);
+				// TODO Auto-generated method stub
+				int c = e.getKeyCode ();
+		        if (c==KeyEvent.VK_UP) {                
+		        	p.y -= textArea2.getLocationOnScreen().y;  
+		        } else if(c==KeyEvent.VK_DOWN) {                
+		        	p.y += textArea2.getLocationOnScreen().y;  
+		        } else if(c==KeyEvent.VK_LEFT) {                
+		        	p.x -= textArea2.getLocationOnScreen().x;   
+		        } else if(c==KeyEvent.VK_RIGHT) {                
+		        	p.x += textArea2.getLocationOnScreen().x;  
+		        }
+				
+			}
+		};)***/
 		tabbedPane1.addTab("Test", null, textArea2, null); 
 		
 		JPanel treePanel = new JPanel();
-		tabbedPane1.addTab("Arbol", null, treePanel, null);
+		//tabbedPane1.addTab("Arbol", null, treePanel, null);
 		
 		JMenuBar Menu = new JMenuBar();
+		Menu.setBounds(46, 30, 140, 30);
 		
 		JMenu File = new JMenu("File");
+		File.setFont(new Font("FreeSans",Font.PLAIN, 25));
+		
 		JMenu Edit = new JMenu("Edit");
+		Edit.setFont(new Font("FreeSans", Font.PLAIN, 25));
 		Menu.add(File);
 		
 		JMenuItem open = new JMenuItem("Open",KeyEvent.VK_A);
+		open.setFont(new Font("FreeSans", Font.PLAIN, 23));
 		open.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
@@ -119,6 +189,7 @@ public class VisualPanel {
 			}	
 		});
 		JMenuItem save = new JMenuItem("Save",KeyEvent.VK_A);
+		save.setFont(new Font("FreeSans", Font.PLAIN, 23));
 		save.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
@@ -126,6 +197,7 @@ public class VisualPanel {
 			}	
 		});
 		JMenuItem quit = new JMenuItem("Quit",KeyEvent.VK_A);
+		quit.setFont(new Font("FreeSans", Font.PLAIN, 23));
 		quit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 			
@@ -139,32 +211,37 @@ public class VisualPanel {
 		Menu.add(Edit);
 		
 		JMenuItem cut = new JMenuItem("Cut",KeyEvent.VK_A);
+		cut.setFont(new Font("FreeSans", Font.PLAIN, 23));
 		JMenuItem copy = new JMenuItem("Copy",KeyEvent.VK_A);
+		copy.setFont(new Font("FreeSans", Font.PLAIN, 23));
 		JMenuItem paste = new JMenuItem("Paste",KeyEvent.VK_A);
+		paste.setFont(new Font("FreeSans", Font.PLAIN, 23));
 		cut.setAction(new DefaultEditorKit.CutAction());
 		copy.setAction(new DefaultEditorKit.CopyAction());
 		paste.setAction(new DefaultEditorKit.PasteAction());
 		Edit.add(cut);
 		Edit.add(copy);
 		Edit.add(paste);
-		
-
-		Menu.setBounds(46, 30, 80, 30);
 		frame.getContentPane().add(Menu);
 		
 		
 		
 		
-		Action compilar = new AbstractAction("PROBAR!!"){
+		Action compilar = new AbstractAction("COMPILAR"){
 			public void actionPerformed(ActionEvent e){
 				readToTree(textArea2, textArea3, treePanel);
 			}
 		}; 
 		JButton btnCompilar = new JButton("COMPILAR");
-		btnCompilar.setBounds(61, 1146, 117, 25);
+		btnCompilar.setFont(new Font("FreeSans", Font.PLAIN, 25));
+		btnCompilar.setBounds(61, 1146, 180, 25);
 		btnCompilar.setAction(compilar);
 		frame.getContentPane().add(btnCompilar);
-		   
+		 
+		JScrollPane scrollPane = new JScrollPane();
+		tabbedPane1.addTab("Arbol", null, scrollPane, null);
+		
+		scrollPane.setViewportView(treePanel);
 		
 		
 	
@@ -177,11 +254,9 @@ public class VisualPanel {
 		        sb.append(System.lineSeparator());
 		        line = br.readLine();
 		    }
-		    String everything = sb.toString();
+		   String everything = sb.toString();
 		   textArea1.setText(everything);
-		   
 		  
-		   
 		   
 		   
 		   
@@ -275,20 +350,33 @@ public class VisualPanel {
       parser.addErrorListener(ThrowingErrorListener.INSTANCE);
 
 	  ParseTree tree = parser.program();
-
+	  
 	  TreeViewer viewr = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
+	  viewr.setFontSize(13);
+	  
 	  viewr.setSize(700, 700);
+	  treePanel.removeAll();
 	  treePanel.add(viewr);
+	  type = new Visitor();
+	  type.visit(tree);
+	  type.aString();
 	  try {
 	  	Errors = Files.readAllLines(file, Charset.forName("UTF-8"));
 	  	Files.deleteIfExists(file);
 	  	for (int i = 0; i < Errors.size(); i++) {
-	  		textArea3.append("(" + (i + 1) + "): " + Errors.get(i) + "\n");
+	  		textArea3.setText("(" + (i + 1) + "): " + Errors.get(i) + "\n");
+	  		textArea3.setText(type.errores);
 	  	}
 	  }
 	  catch ( IOException e ) {
-	  	textArea3.setText("Succes");
+		  if(!(type.errores).equals("")){
+			  textArea3.setText(type.errores);
+		  }else{
+			  textArea3.setText("Succes");
+		  
+		  }
 	  }
+	  
 	  
 	}
 }

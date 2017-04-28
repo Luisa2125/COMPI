@@ -1,0 +1,22 @@
+Ningún identificador es declarado dos veces en el mismo ámbito  *
+o Ningún identificador es utilizado antes de ser declarado. 
+o El programa contiene una definición de un método main sin parámetros, en donde se
+empezará la ejecución del programa.*
+o num en la declaración de un arreglo debe de ser mayor a 0.*
+o El número y tipos de argumentos en la llamada a un método deben de ser los mismos que
+los argumentos formales, es decir las firmas deben de ser idénticas.*
+o Si un método es utilizado en una expresión, este debe de devolver un resultado.*
+o La instrucción return no debe de tener ningún valor de retorno, si el método se
+declara del tipo void.*
+o El valor de retorno de un método debe de ser del mismo tipo con que fue declarado el
+método.*
+o Si se tiene la expresión id[<expr>], id debe de ser un arreglo y el tipo de <expr>
+debe de ser int.*
+o El tipo de <expr> en la estructura if y while, debe de ser del tipo boolean.*
+o Los tipos de operandos para los operadores <arith_op> y <rel_op> deben de ser int.*
+o Los tipos de operandos para los operadores <eq_ops> deben de ser int, char o boolean,
+y además ambos operandos deben de ser del mismo tipo.*
+o Los tipos de operandos para los operadores <cond_ops> y el operador ! deben de ser del
+tipo boolean
+o El valor del lado derecho de una asignación, debe de ser del mismo tipo que la
+locación del lado izquierdo.*

@@ -275,7 +275,7 @@ public class Visitor extends GramaticaCBaseVisitor<String> {
 				//System.out.println("while "+ctx.getChild(2).getText());
 				//System.out.println("cuantos "+ctx.getChild(2).getChild(0).getChild(0).getChild(1).getText());
 				try{
-					if(!(ctx.getChild(2).getChild(0).getChild(0).getChild(1).getText()).equals("==") && !(ctx.getChild(2).getChild(0).getChild(0).getChild(1).getText()).equals(">=") && !(ctx.getChild(2).getChild(0).getChild(0).getChild(1).getText()).equals("<=") && !(ctx.getChild(2).getChild(0).getChild(0).getChild(1).getText()).equals("!=") && !(ctx.getChild(2).getChild(0).getChild(0).getChild(1).getText()).equals(">") && !(ctx.getChild(2).getChild(0).getChild(0).getChild(1).getText()).equals("<")){
+					if(!(ctx.getChild(2).getChild(0).getChild(0).getChild(1).getText()).equals("==") || !(ctx.getChild(2).getChild(0).getChild(0).getChild(1).getText()).equals(">=") || !(ctx.getChild(2).getChild(0).getChild(0).getChild(1).getText()).equals("<=") || !(ctx.getChild(2).getChild(0).getChild(0).getChild(1).getText()).equals("!=") || !(ctx.getChild(2).getChild(0).getChild(0).getChild(1).getText()).equals(">") || !(ctx.getChild(2).getChild(0).getChild(0).getChild(1).getText()).equals("<")){
 						String errorMes = "Error while no boolean \nEn la linea  " + ctx.getStart().getLine();
 						JOptionPane.showMessageDialog(null, errorMes, " BELLO ERROR", JOptionPane.INFORMATION_MESSAGE);
 						errores += "\n"+errorMes;

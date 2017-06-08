@@ -57,7 +57,9 @@ public class VisualPanel {
 	private JFrame frame;
 	private Path file = Paths.get("ErrorLog_Syntax.log");
 	private List<String> Errors;
-	private Visitor type;
+	Visitor type;
+	convVisitor conv;
+	int regNum = 0;
 
 	/**
 	 * Launch the application.
@@ -111,6 +113,14 @@ public class VisualPanel {
 		
 		TextArea textArea2 = new TextArea();
 		textArea2.setFont(new Font("FreeSans", Font.PLAIN, 33));
+		
+		TextArea textArea4 = new TextArea();
+		textArea4.setFont(new Font("FreeSans", Font.PLAIN, 33));
+		tabbedPane1.addTab("Codigo Intermedio", null, textArea4, null);
+		
+		TextArea textArea5 = new TextArea();
+		textArea5.setFont(new Font("FreeSans", Font.PLAIN, 33));
+		tabbedPane1.addTab("ARM", null, textArea5, null);
 		
 		/***textArea2.addKeyListener(new KeyListener() {
 			
@@ -229,7 +239,8 @@ public class VisualPanel {
 		
 		Action compilar = new AbstractAction("COMPILAR"){
 			public void actionPerformed(ActionEvent e){
-				readToTree(textArea2, textArea3, treePanel);
+				readToTree(textArea2, textArea3, treePanel,textArea4, textArea5);
+				
 			}
 		}; 
 		JButton btnCompilar = new JButton("COMPILAR");
@@ -237,7 +248,8 @@ public class VisualPanel {
 		btnCompilar.setBounds(61, 1146, 180, 25);
 		btnCompilar.setAction(compilar);
 		frame.getContentPane().add(btnCompilar);
-		 
+		
+		
 		JScrollPane scrollPane = new JScrollPane();
 		tabbedPane1.addTab("Arbol", null, scrollPane, null);
 		
@@ -333,7 +345,7 @@ public class VisualPanel {
 		
 		}
 	}
-	private void readToTree(TextArea textArea2, TextArea textArea3, JPanel treePanel){
+	private void readToTree(TextArea textArea2, TextArea textArea3, JPanel treePanel, TextArea textArea4,TextArea textArea5){
 		//ANTLR Tree
 	  ANTLRInputStream input = new ANTLRInputStream(textArea2.getText());
 
@@ -357,26 +369,56 @@ public class VisualPanel {
 	  viewr.setSize(700, 700);
 	  treePanel.removeAll();
 	  treePanel.add(viewr);
-	  type = new Visitor();
-	  type.visit(tree);
-	  type.aString();
+	  //type = new Visitor();
+	  conv = new convVisitor();
+	  
+	  //type.visit(tree);
+	  conv.visit(tree);
+	  conv.toString();
+	  //textArea4.setText(conv.toString());
+	  //type.aString();
+	  //conv.aString();
+	  String inter = "";
+	  String lineas = "";
+	  String ARM = "";
+	  
 	  try {
 	  	Errors = Files.readAllLines(file, Charset.forName("UTF-8"));
 	  	Files.deleteIfExists(file);
 	  	for (int i = 0; i < Errors.size(); i++) {
 	  		textArea3.setText("(" + (i + 1) + "): " + Errors.get(i) + "\n");
-	  		textArea3.setText(type.errores);
+	  		//textArea3.setText(type.errores);
 	  	}
 	  }
 	  catch ( IOException e ) {
-		  if(!(type.errores).equals("")){
-			  textArea3.setText(type.errores);
-		  }else{
+		 // if(!(type.errores).equals("")){
+			 // textArea3.setText(type.errores);
+		  //}else{
 			  textArea3.setText("Succes");
-		  
-		  }
+			  
+		  //}
 	  }
-	  
+	  for(quadruple linea:conv.quadruple1){
+		  for(int i = 0;i<(linea.cuadrupla).length;i++){
+			  inter+=(linea.cuadrupla[i]);
+			  lineas += (linea.cuadrupla[i]);
+			  
+		  }
+
+		  lineas = "";
+		  inter += ("\n");
+	  }
+	  textArea4.setText(inter);
+	  conv.data();
+	  conv.getReg();
+	  for(String linea:conv.quadruple2){
+		  
+		ARM+=(linea);
+		ARM += ("\n");
+	  }
+	  textArea5.setText(ARM);
 	  
 	}
+
+	
 }
